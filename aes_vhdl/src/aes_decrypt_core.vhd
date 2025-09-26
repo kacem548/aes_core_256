@@ -42,6 +42,7 @@ architecture rtl of aes_decrypt_core is
   signal rkey_s      : std_logic_vector(127 downto 0);
   signal last_round  : std_logic;
   signal ready_s     : std_logic;
+  signal valid_s     : std_logic;
 
 begin
 
@@ -68,9 +69,9 @@ begin
         state_reg <= (others => '0');
         fsm_s     <= IDLE;
         ready_s   <= '1';
-        valid_o   <= '0';
+        valid_s   <= '0';
       else
-        valid_o <= '0';
+        valid_s <= '0';
         case fsm_s is
           when IDLE =>
             ready_s <= '1';
@@ -90,7 +91,7 @@ begin
           when ROUND =>
             state_reg <= round_out_s;
             if round_cnt = to_unsigned(0, 4) then
-              valid_o <= '1';
+              valid_s <= '1';
               fsm_s   <= IDLE;
             else
               round_cnt <= round_cnt - 1;
@@ -104,8 +105,9 @@ begin
   rkey_idx_s <= std_logic_vector(round_cnt) when (fsm_s = ROUND) else std_logic_vector(round_cnt);
   last_round <= '1' when (fsm_s = ROUND and round_cnt = to_unsigned(0, 4)) else '0';
 
-  block_o <= state_reg when valid_o = '1' else round_out_s;
+  block_o <= state_reg when valid_s = '1' else round_out_s;
   ready_o <= ready_s;
+  valid_o <= valid_s;
 
 end architecture rtl;
 
