@@ -1,0 +1,42 @@
+# ISE/Project Navigator
+*.ncd
+*.ngd
+*.ngr
+*.ngm
+*.map
+*.mrp
+*.par
+*.twr
+*.twx
+*.bit
+*.bgn
+*.bld
+*.drc
+*.lso
+*.ptwx
+*.xmsgs
+*.unroutes
+*.xrpt
+_xmsgs/
+_ngo/
+_xmsgs/*
+iseconfig/
+implementation/*
+*
+!src/**
+!tb/**
+!.gitignore
+!README.md
+
+# ModelSim/Questa
+work/
+transcript
+vsim.wlf
+modelsim.ini
+*.mti
+
+# Other
+*.zip
+*.tar.gz
+*.log
+*.jou
